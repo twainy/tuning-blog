@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <script src="bower_components/requirejs/require.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body onload="init()">
+<h1>Navigation Timing API</h1>
+コード
+<pre>
+var perf = performance.timing;
+console.log("load elapsed sec: " + (perf.loadEventStart - perf.navigationStart) + "sec");
+</pre>
+実行結果
+<pre id="1_result">
+</pre>
+
+<h1>High Resolution Timing API</h1>
+コード
+<pre>
+performance.now();
+</pre>
+実行結果
+<pre id="2_result">
+</pre>
+
+<h1>Page Visiblity</h1>
+<pre>
+            document.addEventListener('visibilitychange', function(event) {
+                if (document.hidden) {
+                    console.log("document is invisible");
+                } else {
+                    console.log("document is visible");
+                }
+            });
+</pre>
+実行結果
+<pre id="3_result">
+別のタブにフォーカスを切りかえるとイベントが発生します
+</pre>
+
+<h1>Resource Timing API</h1>
+コード
+<pre>
+            setTimeout(function () {
+                var img = performance.getEntriesByType("resource")[0];
+                var ttfb = parseInt(img.responseStart - img.startTime),
+                        total = parseInt(img.responseEnd - img.startTime);
+                $("#4_result").text("Time To First Byte:"+ ttfb + "\n" + "Total Time: " + total);
+
+            }, 2000);
+</pre>
+実行結果
+<pre id="4_result">
+</pre>
+
+</body>
+</html>
+
+<script>
+//    $(document).ready( function() {
+        var init = function() {
+                var perf = performance.timing;
+                $("#1_result").text("load elapsed sec: " + (perf.loadEventStart - perf.navigationStart) + "sec");
+                $("#2_result").text(performance.now());
+            document.addEventListener('visibilitychange', function(event) {
+                if (document.hidden) {
+                    $("#3_result").append("document is invisible\n");
+                } else {
+                    $("#3_result").append("document is visible\n");
+                }
+            });
+            setTimeout(function () {
+                var img = performance.getEntriesByType("resource")[0];
+                var ttfb = parseInt(img.responseStart - img.startTime),
+                        total = parseInt(img.responseEnd - img.startTime);
+                $("#4_result").text("Time To First Byte:"+ ttfb + "\n" + "Total Time: " + total);
+
+            }, 2000);
+        };
+
+//    );
+</script>
