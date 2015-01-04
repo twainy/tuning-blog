@@ -58,7 +58,37 @@ performance.now();
 <pre id="4_result">
 </pre>
 
-</body>
+<h1>Performance Timeline</h1>
+コード
+<pre>
+            performance.getEntries()[0];
+</pre>
+実行結果
+<pre id="5_result">
+</pre>
+
+<h1>Battery Status</h1>
+コード
+<pre>
+            var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery || navigator.msBattery;
+
+            console.log(JSON.stringify(battery, null, 4));
+</pre>
+実行結果
+<pre id="6_result">
+    Chromeでは実行結果確認できず
+</pre>
+
+<h1>Beacon</h1>
+コード
+<pre>
+            navigator.sendBeacon("http://twainy.github.io/tuning-blog/webperformanceapi.html", "beaconmessage");
+</pre>
+<pre id="7_result">
+    Beaconを送信しているだけなので出力なし
+</pre>
+
+<</body>
 </html>
 
 <script>
@@ -81,6 +111,11 @@ performance.now();
                 $("#4_result").text("Time To First Byte:"+ ttfb + "\n" + "Total Time: " + total);
 
             }, 2000);
+            $("#5_result").text(JSON.stringify(performance.getEntries()[0], null, 4));
+            var battery = navigator.battery || navigator.webkitBattery || navigator.mozBattery || navigator.msBattery;
+
+            $("#6_result").append(JSON.stringify(battery, null, 4));
+            navigator.sendBeacon("http://twainy.github.io/tuning-blog/beacon.html", "beaconmessage");
         };
 
 //    );
